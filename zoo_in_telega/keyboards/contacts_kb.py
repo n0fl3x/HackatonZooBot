@@ -1,7 +1,7 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 from texts.static_commands_buttons_text import CONTACTS_BUTTON_TEXT
-from urls import ZOO_CONTACTS_URL
+from urls.urls import ZOO_CONTACTS_URL
 
 
 zoo_contacts_btn = InlineKeyboardButton(
