@@ -1,9 +1,9 @@
 START_COMMAND = """start"""
 
-HELP_COMMAND = """помощь"""
+HELP_COMMAND = """help"""
 
-ABOUT_COMMAND = """о_зоопарке"""
+ABOUT_COMMAND = """about"""
 
-CONTACTS_COMMAND = """контакты"""
+CONTACTS_COMMAND = """contacts"""
 
-CREATORS_COMMAND = """создатели_бота"""
+CREATORS_COMMAND = """creators"""

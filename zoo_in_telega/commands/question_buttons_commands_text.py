@@ -1,3 +1,3 @@
-START_QUIZ_COMMAND = """опрос"""
+START_QUIZ_COMMAND = """animal"""
 
-CANCEL_COMMAND = """отмена"""
+CANCEL_COMMAND = """cancel"""
