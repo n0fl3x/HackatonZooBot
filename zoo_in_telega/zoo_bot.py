@@ -1,3 +1,5 @@
+import logging
+
 from aiogram import executor
 
 from bot_settings import dp
@@ -10,8 +12,8 @@ from handlers import (
 
 # --------
 # Starting
-async def on_startup(_):
-    print('Bot is online.')
+async def on_startup(dp):
+    logging.info(' Bot is active.')
 
 
 # --------
@@ -20,11 +22,18 @@ quiz_handlers.register_static_command_handlers(disp=dp)
 static_command_handlers.register_static_command_handlers(disp=dp)
 
 
+# ---------
+# Finishing
+async def on_shutdown(dp):
+    logging.warning(' Shutting down...')
+
+
 # -------
-# Run bot
+# RUN BOT
 if __name__ == '__main__':
     executor.start_polling(
         dispatcher=dp,
         skip_updates=True,
         on_startup=on_startup,
+        on_shutdown=on_shutdown,
     )

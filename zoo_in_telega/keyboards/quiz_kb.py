@@ -1,6 +1,7 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-from commands.question_buttons_commands_text import CANCEL_COMMAND
+from commands.quiz_commands import CANCEL_COMMAND
+from texts.answer_buttons_text import *
 
 
 # CANCEL
@@ -12,23 +13,23 @@ inline_btn_cancel = InlineKeyboardButton(
 
 # QUESTION 1
 inline_btn_1_1 = InlineKeyboardButton(
-    text='1',
-    callback_data='1 inl btn',
+    text=f'{answer_1_1}',
+    callback_data=f'{answer_1_1}',
 )
 
 inline_btn_1_2 = InlineKeyboardButton(
-    text='2',
-    callback_data='2 inl btn',
+    text=f'{answer_1_2}',
+    callback_data=f'{answer_1_2}',
 )
 
 inline_btn_1_3 = InlineKeyboardButton(
-    text='3',
-    callback_data='3 inl btn',
+    text=f'{answer_1_3}',
+    callback_data=f'{answer_1_3}',
 )
 
 inline_btn_1_4 = InlineKeyboardButton(
-    text='4',
-    callback_data='4 inl btn',
+    text=f'{answer_1_4}',
+    callback_data=f'{answer_1_4}',
 )
 
 inline_keyboard_1 = InlineKeyboardMarkup().\
@@ -41,23 +42,23 @@ inline_keyboard_1 = InlineKeyboardMarkup().\
 
 # QUESTION 2
 inline_btn_2_1 = InlineKeyboardButton(
-    text='5',
-    callback_data='5 inl btn',
+    text=f'{answer_2_1}',
+    callback_data=f'{answer_2_1}',
 )
 
 inline_btn_2_2 = InlineKeyboardButton(
-    text='6',
-    callback_data='6 inl btn',
+    text=f'{answer_2_2}',
+    callback_data=f'{answer_2_2}',
 )
 
 inline_btn_2_3 = InlineKeyboardButton(
-    text='7',
-    callback_data='7 inl btn',
+    text=f'{answer_2_3}',
+    callback_data=f'{answer_2_3}',
 )
 
 inline_btn_2_4 = InlineKeyboardButton(
-    text='8',
-    callback_data='8 inl btn',
+    text=f'{answer_2_4}',
+    callback_data=f'{answer_2_4}',
 )
 
 inline_keyboard_2 = InlineKeyboardMarkup().\
@@ -70,23 +71,23 @@ inline_keyboard_2 = InlineKeyboardMarkup().\
 
 # QUESTION 3
 inline_btn_3_1 = InlineKeyboardButton(
-    text='9',
-    callback_data='9 inl btn',
+    text=f'{answer_3_1}',
+    callback_data=f'{answer_3_1}',
 )
 
 inline_btn_3_2 = InlineKeyboardButton(
-    text='10',
-    callback_data='10 inl btn',
+    text=f'{answer_3_2}',
+    callback_data=f'{answer_3_2}',
 )
 
 inline_btn_3_3 = InlineKeyboardButton(
-    text='11',
-    callback_data='11 inl btn',
+    text=f'{answer_3_3}',
+    callback_data=f'{answer_3_3}',
 )
 
 inline_btn_3_4 = InlineKeyboardButton(
-    text='12',
-    callback_data='12 inl btn',
+    text=f'{answer_3_4}',
+    callback_data=f'{answer_3_4}',
 )
 
 inline_keyboard_3 = InlineKeyboardMarkup().\
@@ -99,23 +100,23 @@ inline_keyboard_3 = InlineKeyboardMarkup().\
 
 # QUESTION 4
 inline_btn_4_1 = InlineKeyboardButton(
-    text='13',
-    callback_data='13 inl btn',
+    text=f'{answer_4_1}',
+    callback_data=f'{answer_4_1}',
 )
 
 inline_btn_4_2 = InlineKeyboardButton(
-    text='14',
-    callback_data='14 inl btn',
+    text=f'{answer_4_2}',
+    callback_data=f'{answer_4_2}',
 )
 
 inline_btn_4_3 = InlineKeyboardButton(
-    text='15',
-    callback_data='15 inl btn',
+    text=f'{answer_4_3}',
+    callback_data=f'{answer_4_3}',
 )
 
 inline_btn_4_4 = InlineKeyboardButton(
-    text='16',
-    callback_data='16 inl btn',
+    text=f'{answer_4_4}',
+    callback_data=f'{answer_4_4}',
 )
 
 inline_keyboard_4 = InlineKeyboardMarkup().\
@@ -128,23 +129,23 @@ inline_keyboard_4 = InlineKeyboardMarkup().\
 
 # QUESTION 5
 inline_btn_5_1 = InlineKeyboardButton(
-    text='17',
-    callback_data='17 inl btn',
+    text=f'{answer_5_1}',
+    callback_data=f'{answer_5_1}',
 )
 
 inline_btn_5_2 = InlineKeyboardButton(
-    text='18',
-    callback_data='18 inl btn',
+    text=f'{answer_5_2}',
+    callback_data=f'{answer_5_2}',
 )
 
 inline_btn_5_3 = InlineKeyboardButton(
-    text='19',
-    callback_data='19 inl btn',
+    text=f'{answer_5_3}',
+    callback_data=f'{answer_5_3}',
 )
 
 inline_btn_5_4 = InlineKeyboardButton(
-    text='20',
-    callback_data='20 inl btn',
+    text=f'{answer_5_4}',
+    callback_data=f'{answer_5_4}',
 )
 
 inline_keyboard_5 = InlineKeyboardMarkup().\

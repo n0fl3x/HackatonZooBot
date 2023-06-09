@@ -23,7 +23,6 @@ from texts.static_commands_text import (
 
 # ---------------
 # Static commands
-# @disp.message_handler(commands=[f'{START_COMMAND}'], state='*')
 async def start_command(message: types.Message) -> None:
     await message.answer_photo(
         photo=MSK_ZOO_START_LOGO_LINK,
@@ -31,12 +30,10 @@ async def start_command(message: types.Message) -> None:
     )
 
 
-# @disp.message_handler(commands=[f'{HELP_COMMAND}'], state='*')
 async def help_command(message: types.Message) -> None:
     await message.answer(text=HELP_COMMAND_TEXT)
 
 
-# @disp.message_handler(commands=[f'{ABOUT_COMMAND}'], state='*')
 async def about_command(message: types.Message) -> None:
     await message.answer(
         text=ABOUT_COMMAND_TEXT,
@@ -44,7 +41,6 @@ async def about_command(message: types.Message) -> None:
     )
 
 
-# @disp.message_handler(commands=[f'{CONTACTS_COMMAND}'], state='*')
 async def contacts_command(message: types.Message) -> None:
     await message.answer(
         text=CONTACTS_COMMAND_TEXT,
@@ -52,7 +48,6 @@ async def contacts_command(message: types.Message) -> None:
     )
 
 
-# @disp.message_handler(commands=[f'{CREATORS_COMMAND}'], state='*')
 async def creators_command(message: types.Message) -> None:
     await message.answer(text=CREATORS_COMMAND_TEXT)
 
