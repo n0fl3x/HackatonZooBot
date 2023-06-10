@@ -19,6 +19,7 @@ from filters.quiz_handlers_filters import (
 )
 
 from texts.questions_text import (
+    START_QUIZ_TEXT,
     QUESTION_1,
     QUESTION_2,
     QUESTION_3,
@@ -98,6 +99,7 @@ async def animal_command(message: types.Message, state: FSMContext) -> None:
         await message.answer(text='Вы начали опрос заново.')
         logging.info(f'User with ID {message.from_user.id} restarted quiz.')
 
+    await message.answer(text=START_QUIZ_TEXT)
     await message.answer(
         text=QUESTION_1,
         reply_markup=inline_keyboard_1
