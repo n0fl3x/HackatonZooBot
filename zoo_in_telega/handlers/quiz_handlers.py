@@ -104,41 +104,46 @@ async def animal_command(message: types.Message, state: FSMContext) -> None:
     await CurrentQuestion.question_1.set()
 
 
-# TODO: реализовать проверку ответа на каждый НЕ последний вопрос, когда опрос уже завершён
 async def process_question_1(callback_query: types.CallbackQuery, state: FSMContext):
     cur_state = await state.get_state()
 
     if (callback_query.data == f'{answer_1_1}'
-        or callback_query.data == f'{answer_1_2}'
-        or callback_query.data == f'{answer_1_3}'
-        or callback_query.data == f'{answer_1_4}') \
-            and cur_state == 'CurrentQuestion:question_1':
-        await bot.answer_callback_query(callback_query.id)
-        await bot.send_message(
-            chat_id=callback_query.from_user.id,
-            text=callback_query.data,
-        )
-        logging.info(f'User with ID {callback_query.from_user.id} answered '
-                     f'({callback_query.data}) the 1st question.')
-        await CurrentQuestion.next()
-        await bot.send_message(
-            chat_id=callback_query.from_user.id,
-            text=QUESTION_2,
-            reply_markup=inline_keyboard_2,
-        )
+            or callback_query.data == f'{answer_1_2}'
+            or callback_query.data == f'{answer_1_3}'
+            or callback_query.data == f'{answer_1_4}'):
 
-    elif (callback_query.data == f'{answer_1_1}'
-          or callback_query.data == f'{answer_1_2}'
-          or callback_query.data == f'{answer_1_3}'
-          or callback_query.data == f'{answer_1_4}') \
-            and cur_state != 'CurrentQuestion:question_1':
-        await bot.answer_callback_query(callback_query.id)
-        await bot.send_message(
-            chat_id=callback_query.from_user.id,
-            text=f'{ALREADY_ANSWERED}',
-        )
-        logging.info(f'User with ID {callback_query.from_user.id} tried to '
-                     f'answer ({callback_query.data}) the 1st question again.')
+        if cur_state == 'CurrentQuestion:question_1':
+            await bot.answer_callback_query(callback_query.id)
+            await bot.send_message(
+                chat_id=callback_query.from_user.id,
+                text=callback_query.data,
+            )
+            logging.info(f'User with ID {callback_query.from_user.id} answered '
+                         f'({callback_query.data}) the 1st question.')
+            await CurrentQuestion.next()
+            await bot.send_message(
+                chat_id=callback_query.from_user.id,
+                text=QUESTION_2,
+                reply_markup=inline_keyboard_2,
+            )
+
+        elif cur_state != 'CurrentQuestion:question_1' and cur_state is not None:
+            await bot.answer_callback_query(callback_query.id)
+            await bot.send_message(
+                chat_id=callback_query.from_user.id,
+                text=f'{ALREADY_ANSWERED}',
+            )
+            logging.info(f'User with ID {callback_query.from_user.id} tried to '
+                         f'answer ({callback_query.data}) the 1st question again in current quiz.')
+
+        else:
+            await bot.answer_callback_query(callback_query.id)
+            await bot.send_message(
+                chat_id=callback_query.from_user.id,
+                text=f'{ALREADY_FINISHED}',
+            )
+            logging.info(f'User with ID {callback_query.from_user.id} tried to '
+                         f'answer ({callback_query.data}) the 1st question again in already finished quiz.')
 
     else:
         await process_question_2(callback_query=callback_query, state=state)
@@ -148,36 +153,42 @@ async def process_question_2(callback_query: types.CallbackQuery, state: FSMCont
     cur_state = await state.get_state()
 
     if (callback_query.data == f'{answer_2_1}'
-        or callback_query.data == f'{answer_2_2}'
-        or callback_query.data == f'{answer_2_3}'
-        or callback_query.data == f'{answer_2_4}') \
-            and cur_state == 'CurrentQuestion:question_2':
-        await bot.answer_callback_query(callback_query.id)
-        await bot.send_message(
-            chat_id=callback_query.from_user.id,
-            text=callback_query.data,
-        )
-        logging.info(f'User with ID {callback_query.from_user.id} answered '
-                     f'({callback_query.data}) the 2nd question.')
-        await CurrentQuestion.next()
-        await bot.send_message(
-            chat_id=callback_query.from_user.id,
-            text=QUESTION_3,
-            reply_markup=inline_keyboard_3,
-        )
+            or callback_query.data == f'{answer_2_2}'
+            or callback_query.data == f'{answer_2_3}'
+            or callback_query.data == f'{answer_2_4}'):
 
-    elif (callback_query.data == f'{answer_2_1}'
-          or callback_query.data == f'{answer_2_2}'
-          or callback_query.data == f'{answer_2_3}'
-          or callback_query.data == f'{answer_2_4}') \
-            and cur_state != 'CurrentQuestion:question_2':
-        await bot.answer_callback_query(callback_query.id)
-        await bot.send_message(
-            chat_id=callback_query.from_user.id,
-            text=f'{ALREADY_ANSWERED}',
-        )
-        logging.info(f'User with ID {callback_query.from_user.id} tried to '
-                     f'answer ({callback_query.data}) the 2nd question again.')
+        if cur_state == 'CurrentQuestion:question_2':
+            await bot.answer_callback_query(callback_query.id)
+            await bot.send_message(
+                chat_id=callback_query.from_user.id,
+                text=callback_query.data,
+            )
+            logging.info(f'User with ID {callback_query.from_user.id} answered '
+                         f'({callback_query.data}) the 2nd question.')
+            await CurrentQuestion.next()
+            await bot.send_message(
+                chat_id=callback_query.from_user.id,
+                text=QUESTION_3,
+                reply_markup=inline_keyboard_3,
+            )
+
+        elif cur_state != 'CurrentQuestion:question_2' and cur_state is not None:
+            await bot.answer_callback_query(callback_query.id)
+            await bot.send_message(
+                chat_id=callback_query.from_user.id,
+                text=f'{ALREADY_ANSWERED}',
+            )
+            logging.info(f'User with ID {callback_query.from_user.id} tried to '
+                         f'answer ({callback_query.data}) the 2nd question again in current quiz.')
+
+        else:
+            await bot.answer_callback_query(callback_query.id)
+            await bot.send_message(
+                chat_id=callback_query.from_user.id,
+                text=f'{ALREADY_FINISHED}',
+            )
+            logging.info(f'User with ID {callback_query.from_user.id} tried to '
+                         f'answer ({callback_query.data}) the 2nd question again in already finished quiz.')
 
     else:
         await process_question_3(callback_query=callback_query, state=state)
@@ -187,36 +198,42 @@ async def process_question_3(callback_query: types.CallbackQuery, state: FSMCont
     cur_state = await state.get_state()
 
     if (callback_query.data == f'{answer_3_1}'
-        or callback_query.data == f'{answer_3_2}'
-        or callback_query.data == f'{answer_3_3}'
-        or callback_query.data == f'{answer_3_4}') \
-            and cur_state == 'CurrentQuestion:question_3':
-        await bot.answer_callback_query(callback_query.id)
-        await bot.send_message(
-            chat_id=callback_query.from_user.id,
-            text=callback_query.data,
-        )
-        logging.info(f'User with ID {callback_query.from_user.id} answered '
-                     f'({callback_query.data}) the 3rd question.')
-        await CurrentQuestion.next()
-        await bot.send_message(
-            chat_id=callback_query.from_user.id,
-            text=QUESTION_4,
-            reply_markup=inline_keyboard_4,
-        )
+            or callback_query.data == f'{answer_3_2}'
+            or callback_query.data == f'{answer_3_3}'
+            or callback_query.data == f'{answer_3_4}'):
 
-    elif (callback_query.data == f'{answer_3_1}'
-          or callback_query.data == f'{answer_3_2}'
-          or callback_query.data == f'{answer_3_3}'
-          or callback_query.data == f'{answer_3_4}') \
-            and cur_state != 'CurrentQuestion:question_3':
-        await bot.answer_callback_query(callback_query.id)
-        await bot.send_message(
-            chat_id=callback_query.from_user.id,
-            text=f'{ALREADY_ANSWERED}',
-        )
-        logging.info(f'User with ID {callback_query.from_user.id} tried to '
-                     f'answer ({callback_query.data}) the 3rd question again.')
+        if cur_state == 'CurrentQuestion:question_3':
+            await bot.answer_callback_query(callback_query.id)
+            await bot.send_message(
+                chat_id=callback_query.from_user.id,
+                text=callback_query.data,
+            )
+            logging.info(f'User with ID {callback_query.from_user.id} answered '
+                         f'({callback_query.data}) the 3rd question.')
+            await CurrentQuestion.next()
+            await bot.send_message(
+                chat_id=callback_query.from_user.id,
+                text=QUESTION_4,
+                reply_markup=inline_keyboard_4,
+            )
+
+        elif cur_state != 'CurrentQuestion:question_3' and cur_state is not None:
+            await bot.answer_callback_query(callback_query.id)
+            await bot.send_message(
+                chat_id=callback_query.from_user.id,
+                text=f'{ALREADY_ANSWERED}',
+            )
+            logging.info(f'User with ID {callback_query.from_user.id} tried to '
+                         f'answer ({callback_query.data}) the 3rd question again in current quiz.')
+
+        else:
+            await bot.answer_callback_query(callback_query.id)
+            await bot.send_message(
+                chat_id=callback_query.from_user.id,
+                text=f'{ALREADY_FINISHED}',
+            )
+            logging.info(f'User with ID {callback_query.from_user.id} tried to '
+                         f'answer ({callback_query.data}) the 3rd question again in already finished quiz.')
 
     else:
         await process_question_4(callback_query=callback_query, state=state)
@@ -226,36 +243,42 @@ async def process_question_4(callback_query: types.CallbackQuery, state: FSMCont
     cur_state = await state.get_state()
 
     if (callback_query.data == f'{answer_4_1}'
-        or callback_query.data == f'{answer_4_2}'
-        or callback_query.data == f'{answer_4_3}'
-        or callback_query.data == f'{answer_4_4}') \
-            and cur_state == 'CurrentQuestion:question_4':
-        await bot.answer_callback_query(callback_query.id)
-        await bot.send_message(
-            chat_id=callback_query.from_user.id,
-            text=callback_query.data,
-        )
-        logging.info(f'User with ID {callback_query.from_user.id} answered '
-                     f'({callback_query.data}) the 4th question.')
-        await CurrentQuestion.next()
-        await bot.send_message(
-            chat_id=callback_query.from_user.id,
-            text=QUESTION_5,
-            reply_markup=inline_keyboard_5,
-        )
+            or callback_query.data == f'{answer_4_2}'
+            or callback_query.data == f'{answer_4_3}'
+            or callback_query.data == f'{answer_4_4}'):
 
-    elif (callback_query.data == f'{answer_4_1}'
-          or callback_query.data == f'{answer_4_2}'
-          or callback_query.data == f'{answer_4_3}'
-          or callback_query.data == f'{answer_4_4}') \
-            and cur_state != 'CurrentQuestion:question_4':
-        await bot.answer_callback_query(callback_query.id)
-        await bot.send_message(
-            chat_id=callback_query.from_user.id,
-            text=f'{ALREADY_ANSWERED}',
-        )
-        logging.info(f'User with ID {callback_query.from_user.id} tried to '
-                     f'answer ({callback_query.data}) the 4th question again.')
+        if cur_state == 'CurrentQuestion:question_4':
+            await bot.answer_callback_query(callback_query.id)
+            await bot.send_message(
+                chat_id=callback_query.from_user.id,
+                text=callback_query.data,
+            )
+            logging.info(f'User with ID {callback_query.from_user.id} answered '
+                         f'({callback_query.data}) the 4th question.')
+            await CurrentQuestion.next()
+            await bot.send_message(
+                chat_id=callback_query.from_user.id,
+                text=QUESTION_5,
+                reply_markup=inline_keyboard_5,
+            )
+
+        elif cur_state != 'CurrentQuestion:question_4' and cur_state is not None:
+            await bot.answer_callback_query(callback_query.id)
+            await bot.send_message(
+                chat_id=callback_query.from_user.id,
+                text=f'{ALREADY_ANSWERED}',
+            )
+            logging.info(f'User with ID {callback_query.from_user.id} tried to '
+                         f'answer ({callback_query.data}) the 4th question again in current quiz.')
+
+        else:
+            await bot.answer_callback_query(callback_query.id)
+            await bot.send_message(
+                chat_id=callback_query.from_user.id,
+                text=f'{ALREADY_FINISHED}',
+            )
+            logging.info(f'User with ID {callback_query.from_user.id} tried to '
+                         f'answer ({callback_query.data}) the 4th question again in already finished quiz.')
 
     else:
         await process_question_5(callback_query=callback_query, state=state)
@@ -289,7 +312,7 @@ async def process_question_5(callback_query: types.CallbackQuery, state: FSMCont
             text=f'{ALREADY_FINISHED}',
         )
         logging.info(f'User with ID {callback_query.from_user.id} tried to '
-                     f'answer ({callback_query.data}) the 5th question again.')
+                     f'answer ({callback_query.data}) the 5th question again in already finished quiz.')
 
 
 # ---------------------

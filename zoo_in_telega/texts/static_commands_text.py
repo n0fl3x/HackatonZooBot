@@ -53,5 +53,5 @@ NOT_NONE_STATE_CANCEL_COMMAND_TEXT = f"""
 
 
 NONE_STATE_CANCEL_COMMAND_TEXT = """
-Вы ещё не приступили к новому опросу.
+Вы ещё не приступили к новому опросу
 """
