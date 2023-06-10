@@ -1,12 +1,13 @@
 import logging
 
+from aiogram import types, Dispatcher
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import StatesGroup, State
-from aiogram import types, Dispatcher
 
 from bot_settings import bot
 from commands.quiz_commands import START_QUIZ_COMMAND, CANCEL_COMMAND
 from texts.answer_buttons_text import *
+from database.zoo_bot_db import check_user_db_record, db_start
 
 from handler_filters import (
     cancel_inline_btn_filter,
@@ -114,6 +115,10 @@ async def process_question_1(callback_query: types.CallbackQuery, state: FSMCont
 
         if cur_state == 'CurrentQuestion:question_1':
             await bot.answer_callback_query(callback_query.id)
+            await db_start()
+            async with state.proxy() as data:
+                data['user_id'] = callback_query.from_user.id
+                data['1st_question'] = callback_query.data
             await bot.send_message(
                 chat_id=callback_query.from_user.id,
                 text=callback_query.data,
@@ -159,6 +164,8 @@ async def process_question_2(callback_query: types.CallbackQuery, state: FSMCont
 
         if cur_state == 'CurrentQuestion:question_2':
             await bot.answer_callback_query(callback_query.id)
+            async with state.proxy() as data:
+                data['2nd_question'] = callback_query.data
             await bot.send_message(
                 chat_id=callback_query.from_user.id,
                 text=callback_query.data,
@@ -204,6 +211,8 @@ async def process_question_3(callback_query: types.CallbackQuery, state: FSMCont
 
         if cur_state == 'CurrentQuestion:question_3':
             await bot.answer_callback_query(callback_query.id)
+            async with state.proxy() as data:
+                data['3rd_question'] = callback_query.data
             await bot.send_message(
                 chat_id=callback_query.from_user.id,
                 text=callback_query.data,
@@ -249,6 +258,8 @@ async def process_question_4(callback_query: types.CallbackQuery, state: FSMCont
 
         if cur_state == 'CurrentQuestion:question_4':
             await bot.answer_callback_query(callback_query.id)
+            async with state.proxy() as data:
+                data['4th_question'] = callback_query.data
             await bot.send_message(
                 chat_id=callback_query.from_user.id,
                 text=callback_query.data,
@@ -293,6 +304,9 @@ async def process_question_5(callback_query: types.CallbackQuery, state: FSMCont
         or callback_query.data == f'{answer_5_4}') \
             and cur_state == 'CurrentQuestion:question_5':
         await bot.answer_callback_query(callback_query.id)
+        async with state.proxy() as data:
+            data['5th_question'] = callback_query.data
+        await check_user_db_record(state=state)
         await bot.send_message(
             chat_id=callback_query.from_user.id,
             text=callback_query.data,

@@ -2,3 +2,4 @@
 /.idea/
 .env
 run_bot.bat
+zoo_in_telega/database/zoo_bot_database.db
