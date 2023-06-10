@@ -1,3 +1,5 @@
+import logging
+
 from aiogram import types, Dispatcher
 
 from keyboards.about_kb import about_inline_keyboard
@@ -24,6 +26,7 @@ from texts.static_commands_text import (
 # ---------------
 # Static commands
 async def start_command(message: types.Message) -> None:
+    logging.info(f'User with ID {message.from_user.id} used /{START_COMMAND} command.')
     await message.answer_photo(
         photo=MSK_ZOO_START_LOGO_LINK,
         caption=START_COMMAND_TEXT
@@ -31,10 +34,12 @@ async def start_command(message: types.Message) -> None:
 
 
 async def help_command(message: types.Message) -> None:
+    logging.info(f'User with ID {message.from_user.id} used /{HELP_COMMAND} command.')
     await message.answer(text=HELP_COMMAND_TEXT)
 
 
 async def about_command(message: types.Message) -> None:
+    logging.info(f'User with ID {message.from_user.id} used /{ABOUT_COMMAND} command.')
     await message.answer(
         text=ABOUT_COMMAND_TEXT,
         reply_markup=about_inline_keyboard
@@ -42,6 +47,7 @@ async def about_command(message: types.Message) -> None:
 
 
 async def contacts_command(message: types.Message) -> None:
+    logging.info(f'User with ID {message.from_user.id} used /{CONTACTS_COMMAND} command.')
     await message.answer(
         text=CONTACTS_COMMAND_TEXT,
         reply_markup=zoo_contacts_inline_keyboard
@@ -49,6 +55,7 @@ async def contacts_command(message: types.Message) -> None:
 
 
 async def creators_command(message: types.Message) -> None:
+    logging.info(f'User with ID {message.from_user.id} used /{CREATORS_COMMAND} command.')
     await message.answer(text=CREATORS_COMMAND_TEXT)
 
 

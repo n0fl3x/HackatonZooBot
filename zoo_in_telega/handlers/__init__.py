@@ -1,2 +1,0 @@
-from handlers import quiz_handlers
-from handlers import static_command_handlers

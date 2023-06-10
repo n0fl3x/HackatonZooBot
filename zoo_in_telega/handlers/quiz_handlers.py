@@ -7,9 +7,9 @@ from aiogram.dispatcher.filters.state import StatesGroup, State
 from bot_settings import bot
 from commands.quiz_commands import START_QUIZ_COMMAND, CANCEL_COMMAND
 from texts.answer_buttons_text import *
-from database.zoo_bot_db import check_user_db_record, db_start
+from database.zoo_bot_db_config import check_user_db_record, db_start
 
-from handler_filters import (
+from filters.quiz_handlers_filters import (
     cancel_inline_btn_filter,
     question_filter_1,
     question_filter_2,
@@ -105,7 +105,7 @@ async def animal_command(message: types.Message, state: FSMContext) -> None:
     await CurrentQuestion.question_1.set()
 
 
-async def process_question_1(callback_query: types.CallbackQuery, state: FSMContext):
+async def process_question_1(callback_query: types.CallbackQuery, state: FSMContext) -> None:
     cur_state = await state.get_state()
 
     if (callback_query.data == f'{answer_1_1}'
@@ -154,7 +154,7 @@ async def process_question_1(callback_query: types.CallbackQuery, state: FSMCont
         await process_question_2(callback_query=callback_query, state=state)
 
 
-async def process_question_2(callback_query: types.CallbackQuery, state: FSMContext):
+async def process_question_2(callback_query: types.CallbackQuery, state: FSMContext) -> None:
     cur_state = await state.get_state()
 
     if (callback_query.data == f'{answer_2_1}'
@@ -201,7 +201,7 @@ async def process_question_2(callback_query: types.CallbackQuery, state: FSMCont
         await process_question_3(callback_query=callback_query, state=state)
 
 
-async def process_question_3(callback_query: types.CallbackQuery, state: FSMContext):
+async def process_question_3(callback_query: types.CallbackQuery, state: FSMContext) -> None:
     cur_state = await state.get_state()
 
     if (callback_query.data == f'{answer_3_1}'
@@ -248,7 +248,7 @@ async def process_question_3(callback_query: types.CallbackQuery, state: FSMCont
         await process_question_4(callback_query=callback_query, state=state)
 
 
-async def process_question_4(callback_query: types.CallbackQuery, state: FSMContext):
+async def process_question_4(callback_query: types.CallbackQuery, state: FSMContext) -> None:
     cur_state = await state.get_state()
 
     if (callback_query.data == f'{answer_4_1}'
@@ -295,7 +295,7 @@ async def process_question_4(callback_query: types.CallbackQuery, state: FSMCont
         await process_question_5(callback_query=callback_query, state=state)
 
 
-async def process_question_5(callback_query: types.CallbackQuery, state: FSMContext):
+async def process_question_5(callback_query: types.CallbackQuery, state: FSMContext) -> None:
     cur_state = await state.get_state()
 
     if (callback_query.data == f'{answer_5_1}'

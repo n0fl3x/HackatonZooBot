@@ -1,3 +1,5 @@
+import os
+
 from commands.static_commands import (
     HELP_COMMAND,
     ABOUT_COMMAND,
@@ -35,12 +37,15 @@ ABOUT_COMMAND_TEXT = """
 """
 
 
-CREATORS_COMMAND_TEXT = """
-Данный бот создан командой разработчиков Team_6 в составе:
-<имена и фамилии>
+CREATORS_COMMAND_TEXT = f"""
+Данный бот создан командой разработчиков в составе:
+
+{os.getenv('CREATOR_1')}
+{os.getenv('CREATOR_2')}
+{os.getenv('CREATOR_3')}
 
 при поддержке онлайн школы программирования SkillFactory.
-2023
+2023 ©
 """
 
 

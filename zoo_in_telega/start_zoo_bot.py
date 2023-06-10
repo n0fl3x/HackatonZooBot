@@ -6,7 +6,7 @@ from bot_settings import dp
 
 from handlers import (
     quiz_handlers,
-    static_command_handlers,
+    static_commands_handlers,
 )
 
 
@@ -19,7 +19,7 @@ async def on_startup(dp):
 # --------
 # Handlers
 quiz_handlers.register_static_command_handlers(disp=dp)
-static_command_handlers.register_static_command_handlers(disp=dp)
+static_commands_handlers.register_static_command_handlers(disp=dp)
 
 
 # ---------
@@ -29,7 +29,7 @@ async def on_shutdown(dp):
 
 
 # -------
-# RUN BOT
+# START BOT HERE
 if __name__ == '__main__':
     executor.start_polling(
         dispatcher=dp,
