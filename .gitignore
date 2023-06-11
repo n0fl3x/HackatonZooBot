@@ -3,4 +3,3 @@
 .env
 run_bot.bat
 zoo_in_telega/database/zoo_bot_database.db
-zoo_in_telega/vk_test.py

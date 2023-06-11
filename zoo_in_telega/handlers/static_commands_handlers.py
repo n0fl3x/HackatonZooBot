@@ -4,7 +4,6 @@ from aiogram import types, Dispatcher
 
 from keyboards.about_kb import about_inline_keyboard
 from keyboards.contacts_kb import zoo_contacts_inline_keyboard
-from urls.urls import MSK_ZOO_START_LOGO_LINK
 
 from commands.static_commands import (
     START_COMMAND,
@@ -28,7 +27,7 @@ from texts.static_commands_text import (
 async def start_command(message: types.Message) -> None:
     logging.info(f'User with ID {message.from_user.id} used /{START_COMMAND} command.')
     await message.answer_photo(
-        photo=MSK_ZOO_START_LOGO_LINK,
+        photo=open('images/start-logo.jpg', 'br'),
         caption=START_COMMAND_TEXT
     )
 

@@ -18,6 +18,13 @@ from filters.quiz_handlers_filters import (
     question_filter_5,
 )
 
+from texts.warnings_text import (
+    NOT_NONE_STATE_CANCEL_COMMAND_TEXT,
+    NONE_STATE_CANCEL_COMMAND_TEXT,
+    ALREADY_ANSWERED,
+    ALREADY_FINISHED,
+)
+
 from texts.questions_text import (
     START_QUIZ_TEXT,
     QUESTION_1,
@@ -26,8 +33,6 @@ from texts.questions_text import (
     QUESTION_4,
     QUESTION_5,
     END_MESSAGE,
-    ALREADY_ANSWERED,
-    ALREADY_FINISHED,
 )
 
 from keyboards.quiz_kb import (
@@ -36,11 +41,6 @@ from keyboards.quiz_kb import (
     inline_keyboard_3,
     inline_keyboard_4,
     inline_keyboard_5,
-)
-
-from texts.static_commands_text import (
-    NOT_NONE_STATE_CANCEL_COMMAND_TEXT,
-    NONE_STATE_CANCEL_COMMAND_TEXT,
 )
 
 
@@ -100,8 +100,9 @@ async def animal_command(message: types.Message, state: FSMContext) -> None:
         logging.info(f'User with ID {message.from_user.id} restarted quiz.')
 
     await message.answer(text=START_QUIZ_TEXT)
-    await message.answer(
-        text=QUESTION_1,
+    await message.answer_photo(
+        photo=open('images/EWFW.jpg', 'br'),
+        caption=QUESTION_1,
         reply_markup=inline_keyboard_1
     )
     await CurrentQuestion.question_1.set()
@@ -128,9 +129,10 @@ async def process_question_1(callback_query: types.CallbackQuery, state: FSMCont
             logging.info(f'User with ID {callback_query.from_user.id} answered '
                          f'({callback_query.data}) the 1st question.')
             await CurrentQuestion.next()
-            await bot.send_message(
+            await bot.send_photo(
                 chat_id=callback_query.from_user.id,
-                text=QUESTION_2,
+                photo=open('images/food.jpg', 'br'),
+                caption=QUESTION_2,
                 reply_markup=inline_keyboard_2,
             )
 
@@ -175,9 +177,10 @@ async def process_question_2(callback_query: types.CallbackQuery, state: FSMCont
             logging.info(f'User with ID {callback_query.from_user.id} answered '
                          f'({callback_query.data}) the 2nd question.')
             await CurrentQuestion.next()
-            await bot.send_message(
+            await bot.send_photo(
                 chat_id=callback_query.from_user.id,
-                text=QUESTION_3,
+                photo=open('images/time_of_day.jpg', 'br'),
+                caption=QUESTION_3,
                 reply_markup=inline_keyboard_3,
             )
 
@@ -222,9 +225,10 @@ async def process_question_3(callback_query: types.CallbackQuery, state: FSMCont
             logging.info(f'User with ID {callback_query.from_user.id} answered '
                          f'({callback_query.data}) the 3rd question.')
             await CurrentQuestion.next()
-            await bot.send_message(
+            await bot.send_photo(
                 chat_id=callback_query.from_user.id,
-                text=QUESTION_4,
+                photo=open('images/moods.jpg', 'br'),
+                caption=QUESTION_4,
                 reply_markup=inline_keyboard_4,
             )
 
@@ -269,9 +273,10 @@ async def process_question_4(callback_query: types.CallbackQuery, state: FSMCont
             logging.info(f'User with ID {callback_query.from_user.id} answered '
                          f'({callback_query.data}) the 4th question.')
             await CurrentQuestion.next()
-            await bot.send_message(
+            await bot.send_photo(
                 chat_id=callback_query.from_user.id,
-                text=QUESTION_5,
+                photo=open('images/weather.jpg', 'br'),
+                caption=QUESTION_5,
                 reply_markup=inline_keyboard_5,
             )
 
