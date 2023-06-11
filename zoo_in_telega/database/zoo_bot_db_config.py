@@ -5,6 +5,7 @@
 import logging
 import sqlite3 as sql
 
+from datetime import datetime
 from aiogram.dispatcher.storage import FSMContext
 
 connect = sql.connect(r'database/zoo_bot_database.db')
@@ -16,7 +17,7 @@ async def db_start():
     Если таблица уже существует, то просто подключается к ней."""
 
     if connect:
-        logging.info('Successfully connected to database.')
+        logging.info(f' {datetime.now()} : Successfully connected to database.')
 
     curs.execute(
         """CREATE TABLE IF NOT EXISTS quiz_results (
@@ -39,12 +40,13 @@ async def db_insert_new_results(state: FSMContext):
             + data.get('5th_question')
 
         to_insert = (user, user_results)
-
         curs.execute(
-            """INSERT INTO quiz_results VALUES (?, ?)""",
+            """INSERT INTO quiz_results
+            VALUES (?, ?)""",
             to_insert,
         )
         connect.commit()
+        logging.info(f' {datetime.now()} : New record successfully added to database.')
 
 
 async def db_replace_old_results(state: FSMContext):
@@ -53,10 +55,9 @@ async def db_replace_old_results(state: FSMContext):
 
     async with state.proxy() as data:
         user_id = data.get('user_id')
-
         curs.execute(f"""DELETE FROM quiz_results WHERE user_id = '{user_id}'""")
         connect.commit()
-
+        logging.info(f'{datetime.now()} : Old record successfully deleted from database.')
         await db_insert_new_results(state=state)
 
 

@@ -1,5 +1,6 @@
 import logging
 
+from datetime import datetime
 from aiogram import types, Dispatcher
 
 from keyboards.about_kb import about_inline_keyboard
@@ -25,37 +26,40 @@ from texts.static_commands_text import (
 # ---------------
 # Static commands
 async def start_command(message: types.Message) -> None:
-    logging.info(f'User with ID {message.from_user.id} used /{START_COMMAND} command.')
+    logging.info(f' {datetime.now()} : User with ID {message.from_user.id} used /{START_COMMAND} command.')
     await message.answer_photo(
         photo=open('images/start-logo.jpg', 'br'),
-        caption=START_COMMAND_TEXT
+        caption=START_COMMAND_TEXT,
     )
 
 
 async def help_command(message: types.Message) -> None:
-    logging.info(f'User with ID {message.from_user.id} used /{HELP_COMMAND} command.')
+    logging.info(f' {datetime.now()} : User with ID {message.from_user.id} used /{HELP_COMMAND} command.')
     await message.answer(text=HELP_COMMAND_TEXT)
 
 
 async def about_command(message: types.Message) -> None:
-    logging.info(f'User with ID {message.from_user.id} used /{ABOUT_COMMAND} command.')
-    await message.answer(
-        text=ABOUT_COMMAND_TEXT,
-        reply_markup=about_inline_keyboard
+    logging.info(f' {datetime.now()} : User with ID {message.from_user.id} used /{ABOUT_COMMAND} command.')
+    await message.answer_photo(
+        photo=open('images/about-logo.jpg', 'br'),
+        reply_markup=about_inline_keyboard,
     )
 
 
 async def contacts_command(message: types.Message) -> None:
-    logging.info(f'User with ID {message.from_user.id} used /{CONTACTS_COMMAND} command.')
+    logging.info(f' {datetime.now()} : User with ID {message.from_user.id} used /{CONTACTS_COMMAND} command.')
     await message.answer(
         text=CONTACTS_COMMAND_TEXT,
-        reply_markup=zoo_contacts_inline_keyboard
+        reply_markup=zoo_contacts_inline_keyboard,
     )
 
 
 async def creators_command(message: types.Message) -> None:
-    logging.info(f'User with ID {message.from_user.id} used /{CREATORS_COMMAND} command.')
-    await message.answer(text=CREATORS_COMMAND_TEXT)
+    logging.info(f' {datetime.now()} : User with ID {message.from_user.id} used /{CREATORS_COMMAND} command.')
+    await message.answer_photo(
+        photo=open('images/creators-logo.png', 'br'),
+        caption=CREATORS_COMMAND_TEXT,
+    )
 
 
 # ---------------------

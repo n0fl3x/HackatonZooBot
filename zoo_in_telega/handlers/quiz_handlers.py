@@ -1,5 +1,6 @@
 import logging
 
+from datetime import datetime
 from aiogram import types, Dispatcher
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import StatesGroup, State
@@ -62,11 +63,12 @@ async def cancel_command(message: types.Message, state: FSMContext) -> None:
     current_state = await state.get_state()
 
     if current_state is None:
-        logging.info(f'User with ID {message.from_user.id} tried to cancel empty state.')
+        logging.info(f' {datetime.now()} : User with ID {message.from_user.id} tried to cancel empty state.')
         await message.answer(text=NONE_STATE_CANCEL_COMMAND_TEXT)
         return
 
-    logging.info(f'User with ID {message.from_user.id} cancelled quiz at {current_state} state by command.')
+    logging.info(f' {datetime.now()} : User with ID {message.from_user.id} cancelled '
+                 f'quiz at {current_state} state by command.')
     await state.reset_state()
     await message.answer(text=NOT_NONE_STATE_CANCEL_COMMAND_TEXT)
 
@@ -77,12 +79,13 @@ async def cancel_inline_button(callback: types.CallbackQuery, state: FSMContext)
     current_state = await state.get_state()
 
     if current_state is None:
-        logging.info(f'User with ID {callback.from_user.id} tried to cancel empty state.')
+        logging.info(f' {datetime.now()} : User with ID {callback.from_user.id} tried to cancel empty state.')
         await callback.answer()
         await callback.message.answer(text=NONE_STATE_CANCEL_COMMAND_TEXT)
         return
 
-    logging.info(f'User with ID {callback.from_user.id} cancelled quiz at {current_state} state by inline button.')
+    logging.info(f' {datetime.now()} : User with ID {callback.from_user.id} cancelled '
+                 f'quiz at {current_state} state by inline button.')
     await state.reset_state()
     await callback.answer()
     await callback.message.answer(text=NOT_NONE_STATE_CANCEL_COMMAND_TEXT)
@@ -94,10 +97,10 @@ async def animal_command(message: types.Message, state: FSMContext) -> None:
     current_state = await state.get_state()
 
     if current_state is None:
-        logging.info(f'User with ID {message.from_user.id} started new quiz.')
+        logging.info(f' {datetime.now()} : User with ID {message.from_user.id} started new quiz.')
     else:
         await message.answer(text='Вы начали опрос заново.')
-        logging.info(f'User with ID {message.from_user.id} restarted quiz.')
+        logging.info(f' {datetime.now()} : User with ID {message.from_user.id} restarted quiz.')
 
     await message.answer(text=START_QUIZ_TEXT)
     await message.answer_photo(
@@ -126,7 +129,7 @@ async def process_question_1(callback_query: types.CallbackQuery, state: FSMCont
                 chat_id=callback_query.from_user.id,
                 text=callback_query.data,
             )
-            logging.info(f'User with ID {callback_query.from_user.id} answered '
+            logging.info(f' {datetime.now()} : User with ID {callback_query.from_user.id} answered '
                          f'({callback_query.data}) the 1st question.')
             await CurrentQuestion.next()
             await bot.send_photo(
@@ -142,7 +145,7 @@ async def process_question_1(callback_query: types.CallbackQuery, state: FSMCont
                 chat_id=callback_query.from_user.id,
                 text=f'{ALREADY_ANSWERED}',
             )
-            logging.info(f'User with ID {callback_query.from_user.id} tried to '
+            logging.info(f' {datetime.now()} : User with ID {callback_query.from_user.id} tried to '
                          f'answer ({callback_query.data}) the 1st question again in current quiz.')
 
         else:
@@ -151,7 +154,7 @@ async def process_question_1(callback_query: types.CallbackQuery, state: FSMCont
                 chat_id=callback_query.from_user.id,
                 text=f'{ALREADY_FINISHED}',
             )
-            logging.info(f'User with ID {callback_query.from_user.id} tried to '
+            logging.info(f' {datetime.now()} : User with ID {callback_query.from_user.id} tried to '
                          f'answer ({callback_query.data}) the 1st question again in already finished quiz.')
 
     else:
@@ -174,7 +177,7 @@ async def process_question_2(callback_query: types.CallbackQuery, state: FSMCont
                 chat_id=callback_query.from_user.id,
                 text=callback_query.data,
             )
-            logging.info(f'User with ID {callback_query.from_user.id} answered '
+            logging.info(f' {datetime.now()} : User with ID {callback_query.from_user.id} answered '
                          f'({callback_query.data}) the 2nd question.')
             await CurrentQuestion.next()
             await bot.send_photo(
@@ -190,7 +193,7 @@ async def process_question_2(callback_query: types.CallbackQuery, state: FSMCont
                 chat_id=callback_query.from_user.id,
                 text=f'{ALREADY_ANSWERED}',
             )
-            logging.info(f'User with ID {callback_query.from_user.id} tried to '
+            logging.info(f' {datetime.now()} : User with ID {callback_query.from_user.id} tried to '
                          f'answer ({callback_query.data}) the 2nd question again in current quiz.')
 
         else:
@@ -199,7 +202,7 @@ async def process_question_2(callback_query: types.CallbackQuery, state: FSMCont
                 chat_id=callback_query.from_user.id,
                 text=f'{ALREADY_FINISHED}',
             )
-            logging.info(f'User with ID {callback_query.from_user.id} tried to '
+            logging.info(f' {datetime.now()} : User with ID {callback_query.from_user.id} tried to '
                          f'answer ({callback_query.data}) the 2nd question again in already finished quiz.')
 
     else:
@@ -222,7 +225,7 @@ async def process_question_3(callback_query: types.CallbackQuery, state: FSMCont
                 chat_id=callback_query.from_user.id,
                 text=callback_query.data,
             )
-            logging.info(f'User with ID {callback_query.from_user.id} answered '
+            logging.info(f' {datetime.now()} : User with ID {callback_query.from_user.id} answered '
                          f'({callback_query.data}) the 3rd question.')
             await CurrentQuestion.next()
             await bot.send_photo(
@@ -238,7 +241,7 @@ async def process_question_3(callback_query: types.CallbackQuery, state: FSMCont
                 chat_id=callback_query.from_user.id,
                 text=f'{ALREADY_ANSWERED}',
             )
-            logging.info(f'User with ID {callback_query.from_user.id} tried to '
+            logging.info(f' {datetime.now()} : User with ID {callback_query.from_user.id} tried to '
                          f'answer ({callback_query.data}) the 3rd question again in current quiz.')
 
         else:
@@ -247,7 +250,7 @@ async def process_question_3(callback_query: types.CallbackQuery, state: FSMCont
                 chat_id=callback_query.from_user.id,
                 text=f'{ALREADY_FINISHED}',
             )
-            logging.info(f'User with ID {callback_query.from_user.id} tried to '
+            logging.info(f' {datetime.now()} : User with ID {callback_query.from_user.id} tried to '
                          f'answer ({callback_query.data}) the 3rd question again in already finished quiz.')
 
     else:
@@ -270,7 +273,7 @@ async def process_question_4(callback_query: types.CallbackQuery, state: FSMCont
                 chat_id=callback_query.from_user.id,
                 text=callback_query.data,
             )
-            logging.info(f'User with ID {callback_query.from_user.id} answered '
+            logging.info(f' {datetime.now()} : User with ID {callback_query.from_user.id} answered '
                          f'({callback_query.data}) the 4th question.')
             await CurrentQuestion.next()
             await bot.send_photo(
@@ -286,7 +289,7 @@ async def process_question_4(callback_query: types.CallbackQuery, state: FSMCont
                 chat_id=callback_query.from_user.id,
                 text=f'{ALREADY_ANSWERED}',
             )
-            logging.info(f'User with ID {callback_query.from_user.id} tried to '
+            logging.info(f' {datetime.now()} : User with ID {callback_query.from_user.id} tried to '
                          f'answer ({callback_query.data}) the 4th question again in current quiz.')
 
         else:
@@ -295,7 +298,7 @@ async def process_question_4(callback_query: types.CallbackQuery, state: FSMCont
                 chat_id=callback_query.from_user.id,
                 text=f'{ALREADY_FINISHED}',
             )
-            logging.info(f'User with ID {callback_query.from_user.id} tried to '
+            logging.info(f' {datetime.now()} : User with ID {callback_query.from_user.id} tried to '
                          f'answer ({callback_query.data}) the 4th question again in already finished quiz.')
 
     else:
@@ -318,7 +321,7 @@ async def process_question_5(callback_query: types.CallbackQuery, state: FSMCont
             chat_id=callback_query.from_user.id,
             text=callback_query.data,
         )
-        logging.info(f'User with ID {callback_query.from_user.id} answered '
+        logging.info(f' {datetime.now()} : User with ID {callback_query.from_user.id} answered '
                      f'({callback_query.data}) the 5th question.')
         await state.finish()
         await bot.send_message(
@@ -332,7 +335,7 @@ async def process_question_5(callback_query: types.CallbackQuery, state: FSMCont
             chat_id=callback_query.from_user.id,
             text=f'{ALREADY_FINISHED}',
         )
-        logging.info(f'User with ID {callback_query.from_user.id} tried to '
+        logging.info(f' {datetime.now()} : User with ID {callback_query.from_user.id} tried to '
                      f'answer ({callback_query.data}) the 5th question again in already finished quiz.')
 
 

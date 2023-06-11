@@ -1,5 +1,6 @@
 import logging
 
+from datetime import datetime
 from aiogram import executor
 
 from bot_settings import dp
@@ -13,7 +14,7 @@ from handlers import (
 # --------
 # Starting
 async def on_startup(dp):
-    logging.info(' Bot is active.')
+    logging.info(f' {datetime.now()} : Bot is active.')
 
 
 # --------
@@ -25,7 +26,7 @@ static_commands_handlers.register_static_command_handlers(disp=dp)
 # ---------
 # Finishing
 async def on_shutdown(dp):
-    logging.warning(' Shutting down...')
+    logging.warning(f' {datetime.now()} : Shutting down...')
 
 
 # -------
