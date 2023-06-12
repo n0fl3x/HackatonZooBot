@@ -18,7 +18,6 @@ from texts.static_commands_text import (
     START_COMMAND_TEXT,
     HELP_COMMAND_TEXT,
     CONTACTS_COMMAND_TEXT,
-    ABOUT_COMMAND_TEXT,
     CREATORS_COMMAND_TEXT,
 )
 

@@ -1,6 +1,6 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-from urls.urls import (
+from urls.static_commands_urls import (
     ZOO_HISTORY_URL,
     YOUTUBE_CHANNEL_URL,
 )
