@@ -8,6 +8,8 @@ async def cancel_inline_btn_filter(callback_query: types.CallbackQuery):
         return callback_query
 
 
+# -----------------
+# Questions filters
 async def question_filter_1(callback_query: types.CallbackQuery):
     return callback_query
 

@@ -21,7 +21,7 @@ LETS_SEE = """Подробнее"""
 # ---------
 # Бинтуронг
 inline_btn_result_1 = InlineKeyboardButton(
-    text='Што?',
+    text=LETS_SEE,
     url=ANIMAL_1_URL,
 )
 

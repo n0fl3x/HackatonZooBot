@@ -49,15 +49,15 @@ async def db_insert_new_results(state: FSMContext):
         logging.info(f' {datetime.now()} : New record successfully added to database.')
 
 
-async def db_replace_old_results(state: FSMContext):
-    """Функция для замены существующей записи с результатами опроса,
+async def db_delete_old_results(state: FSMContext):
+    """Функция, удаляющая существующую запись с результатами опроса,
     если пользователь его уже проходил."""
 
     async with state.proxy() as data:
         user_id = data.get('user_id')
         curs.execute(f"""DELETE FROM quiz_results WHERE user_id = '{user_id}'""")
         connect.commit()
-        logging.info(f'{datetime.now()} : Old record successfully deleted from database.')
+        logging.info(f' {datetime.now()} : Old record successfully deleted from database.')
         await db_insert_new_results(state=state)
 
 
@@ -71,4 +71,4 @@ async def check_user_db_record(state: FSMContext):
         if not find:
             await db_insert_new_results(state=state)
         else:
-            await db_replace_old_results(state=state)
+            await db_delete_old_results(state=state)

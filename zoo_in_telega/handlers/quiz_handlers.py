@@ -7,9 +7,9 @@ from aiogram.dispatcher.filters.state import StatesGroup, State
 
 from bot_settings import bot
 from commands.quiz_commands import START_QUIZ_COMMAND, CANCEL_COMMAND
+from filters.result_filters import get_totem_animal
 from texts.answer_buttons_text import *
 from database.zoo_bot_db_config import check_user_db_record, db_start
-from texts.animals_text import ANIMAL_1_TEXT
 
 from filters.quiz_handlers_filters import (
     cancel_inline_btn_filter,
@@ -313,28 +313,14 @@ async def process_question_5(callback_query: types.CallbackQuery, state: FSMCont
 
     if (callback_query.data == f'{answer_5_1}'
         or callback_query.data == f'{answer_5_2}'
-        or callback_query.data == f'{answer_5_3}') \
+        or callback_query.data == f'{answer_5_3}'
+        or callback_query.data == f'{answer_5_4}')\
             and cur_state == 'CurrentQuestion:question_5':
         await bot.answer_callback_query(callback_query.id)
         async with state.proxy() as data:
             data['5th_question'] = callback_query.data
-        await check_user_db_record(state=state)
-        await bot.send_message(
-            chat_id=callback_query.from_user.id,
-            text=callback_query.data,
-        )
-        logging.info(f' {datetime.now()} : User with ID {callback_query.from_user.id} answered '
-                     f'({callback_query.data}) the 5th question.')
-        await state.finish()
-        await bot.send_message(
-            chat_id=callback_query.from_user.id,
-            text=END_MESSAGE,
-        )
-
-    elif callback_query.data == f'{answer_5_4}' and cur_state == 'CurrentQuestion:question_5':
-        await bot.answer_callback_query(callback_query.id)
-        async with state.proxy() as data:
-            data['5th_question'] = callback_query.data
+            proxy_dict = data.as_dict()
+            result = await get_totem_animal(proxy_dict)
         await check_user_db_record(state=state)
         await bot.send_message(
             chat_id=callback_query.from_user.id,
@@ -344,10 +330,10 @@ async def process_question_5(callback_query: types.CallbackQuery, state: FSMCont
                      f'({callback_query.data}) the 5th question.')
         await state.finish()
         await bot.send_photo(
-            chat_id=callback_query.from_user.id,
-            photo=open('images/binturong.jpg', 'br'),
-            caption=ANIMAL_1_TEXT,
-            reply_markup=inline_keyboard_result_1,
+            chat_id=result.get('chat_id'),
+            photo=open(f"{result.get('photo')}", 'br'),
+            caption=result.get('caption'),
+            reply_markup=result.get('reply_markup'),
         )
         await bot.send_message(
             chat_id=callback_query.from_user.id,
