@@ -320,7 +320,7 @@ async def process_question_5(callback_query: types.CallbackQuery, state: FSMCont
         async with state.proxy() as data:
             data['5th_question'] = callback_query.data
             proxy_dict = data.as_dict()
-            result = await get_totem_animal(proxy_dict)
+            result = await get_totem_animal(proxy_dict=proxy_dict)
         await check_user_db_record(state=state)
         await bot.send_message(
             chat_id=callback_query.from_user.id,
@@ -352,7 +352,7 @@ async def process_question_5(callback_query: types.CallbackQuery, state: FSMCont
 
 # ---------------------
 # Handlers registration
-def register_static_command_handlers(disp: Dispatcher):
+def register_quiz_handlers(disp: Dispatcher):
     disp.register_message_handler(
         cancel_command,
         commands=[f'{CANCEL_COMMAND}'],

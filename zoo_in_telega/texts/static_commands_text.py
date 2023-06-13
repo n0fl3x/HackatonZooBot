@@ -50,8 +50,8 @@ ABOUT_COMMAND_TEXT = """
 CREATORS_COMMAND_TEXT = f"""
 Данный бот создан командой разработчиков в составе:
 
-{os.getenv('CREATOR_1')}
-{os.getenv('CREATOR_2')}
+Дарья Кузнецова - @camomail0_0
+Роман Невзоров - @Nevzorov_r_o
 
 при поддержке онлайн школы программирования SkillFactory.
 2023 ©

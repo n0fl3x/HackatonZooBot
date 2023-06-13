@@ -5,18 +5,20 @@ from database.all_animals import ALL_ANIMALS
 
 
 async def get_totem_animal(proxy_dict: dict) -> dict:
-    hidden_results = {}
-
-    qualities = []
-    for animal in ALL_ANIMALS.values():
-        for qual in animal['ANIMAL_QUALITIES']:
-            qualities.append(qual)
-
-    quals_set = set(qualities)
-    for item in quals_set:
-        hidden_results[item] = 0
-
     chat_id = proxy_dict.get('user_id')
+    proxy_dict.pop('user_id')
+
+    hidden_results = {}
+    only_qualities = []
+
+    for animal_dict in ALL_ANIMALS.values():
+        for quality in animal_dict['ANIMAL_QUALITIES']:
+            only_qualities.append(quality)
+
+    quals_set = set(only_qualities)
+
+    for qual in quals_set:
+        hidden_results[qual] = 0
 
     # ------------
     # 1st question
@@ -99,45 +101,59 @@ async def get_totem_animal(proxy_dict: dict) -> dict:
             'reply_markup': ALL_ANIMALS['ANIMAL_1']['ANIMAL_KB'],
         }
 
-    proxy_dict.pop('user_id')
     max_value = max(hidden_results.values())
 
-    final_dict = {key: value for key, value in hidden_results.items() if value == max_value}
-    top_qualities_list = [q for q in final_dict.keys()]
+    max_quals_dict = {key: value for key, value in hidden_results.items() if value == max_value}
+    top_qualities_list = [q for q in max_quals_dict.keys()]
+    print('top_qualities_list = ', top_qualities_list)
 
     filtered_animals = []
-    for quality in top_qualities_list:
-        for animal in ALL_ANIMALS.values():
-            for anim in animal['ANIMAL_QUALITIES']:
-                if quality == anim:
-                    filtered_animals.append(animal['ANIMAL_NAME'])
 
-    animal_to_get = []
+    for quality in top_qualities_list:
+        for animal, dict_ in ALL_ANIMALS.items():
+            for anim_qual in dict_['ANIMAL_QUALITIES']:
+                if quality == anim_qual:
+                    filtered_animals.append(animal)
+
+    print('hidden_results = ', hidden_results)
+    print('filtered_animals = ', filtered_animals)
 
     if len(filtered_animals) == 1:
-        for animal, dict_ in ALL_ANIMALS.items():
-            for v in dict_.values():
-                if v == filtered_animals[0]:
-                    animal_to_get.append(animal)
-
         return {
             'chat_id': chat_id,
-            'photo': ALL_ANIMALS[f'{animal_to_get[0]}']['ANIMAL_IMAGE'],
-            'caption': ALL_ANIMALS[f'{animal_to_get[0]}']['ANIMAL_DESCRIPTION'],
-            'reply_markup': ALL_ANIMALS[f'{animal_to_get[0]}']['ANIMAL_KB'],
+            'photo': ALL_ANIMALS[f'{filtered_animals[0]}']['ANIMAL_IMAGE'],
+            'caption': ALL_ANIMALS[f'{filtered_animals[0]}']['ANIMAL_DESCRIPTION'],
+            'reply_markup': ALL_ANIMALS[f'{filtered_animals[0]}']['ANIMAL_KB'],
         }
 
     else:
-        for animal, dict_ in ALL_ANIMALS.items():
-            for v in dict_.values():
-                if v == filtered_animals[0]:
-                    animal_to_get.append(animal)
+        winners = {animal: 0 for animal in filtered_animals}
 
-        my_animal = choice(animal_to_get)
+        for filtered_animal in filtered_animals:
+            for top_quality in top_qualities_list:
+                for qual in only_qualities:
+                    if top_quality == qual:
+                        winners[filtered_animal] += 1
 
-        return {
-            'chat_id': chat_id,
-            'photo': ALL_ANIMALS[f'{my_animal}']['ANIMAL_IMAGE'],
-            'caption': ALL_ANIMALS[f'{my_animal}']['ANIMAL_DESCRIPTION'],
-            'reply_markup': ALL_ANIMALS[f'{my_animal}']['ANIMAL_KB'],
-        }
+        print('winners = ', winners)
+        max_points = max(winners.values())
+        winner_dict = {key: value for key, value in winners.items() if value == max_points}
+        print('winners_dict = ', winner_dict)
+
+        if len(winner_dict) == 1:
+            return {
+                'chat_id': chat_id,
+                'photo': ALL_ANIMALS[f'{list(winner_dict.keys())[0]}']['ANIMAL_IMAGE'],
+                'caption': ALL_ANIMALS[f'{list(winner_dict.keys())[0]}']['ANIMAL_DESCRIPTION'],
+                'reply_markup': ALL_ANIMALS[f'{list(winner_dict.keys())[0]}']['ANIMAL_KB'],
+            }
+
+        else:
+            rand_winner = choice(list(winner_dict.keys()))
+
+            return {
+                'chat_id': chat_id,
+                'photo': ALL_ANIMALS[f'{rand_winner}']['ANIMAL_IMAGE'],
+                'caption': ALL_ANIMALS[f'{rand_winner}']['ANIMAL_DESCRIPTION'],
+                'reply_markup': ALL_ANIMALS[f'{rand_winner}']['ANIMAL_KB'],
+            }

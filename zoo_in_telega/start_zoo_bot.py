@@ -19,7 +19,7 @@ async def on_startup(dp):
 
 # --------
 # Handlers
-quiz_handlers.register_static_command_handlers(disp=dp)
+quiz_handlers.register_quiz_handlers(disp=dp)
 static_commands_handlers.register_static_command_handlers(disp=dp)
 
 
