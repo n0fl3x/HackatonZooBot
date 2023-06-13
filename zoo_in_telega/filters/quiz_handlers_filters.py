@@ -3,6 +3,12 @@ from aiogram import types
 from commands.quiz_commands import CANCEL_COMMAND
 
 
+"""
+Хоть эти фильтры в данный момент не несут никакой смысловой нагрузки,
+они были вынесены в отдельный файл для их возможной будущей кастомизации.
+"""
+
+
 async def cancel_inline_btn_filter(callback_query: types.CallbackQuery):
     if callback_query.data == f'/{CANCEL_COMMAND}':
         return callback_query

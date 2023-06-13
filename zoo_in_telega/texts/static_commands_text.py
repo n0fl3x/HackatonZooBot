@@ -1,5 +1,3 @@
-import os
-
 from commands.static_commands import (
     HELP_COMMAND,
     ABOUT_COMMAND,
@@ -24,7 +22,6 @@ START_COMMAND_TEXT = f"""
 HELP_COMMAND_TEXT = f"""
 Список доступных команд данного бота:
 
-
 /{START_QUIZ_COMMAND} - запуск развлекательного опроса для определения Вашего тотемного животного
 
 /{HELP_COMMAND} - вывести список доступных команд
@@ -38,7 +35,11 @@ HELP_COMMAND_TEXT = f"""
 
 
 CONTACTS_COMMAND_TEXT = """
-Актуальная информация о том, как с нами связаться:
+Для связи по программе опеки:
++7 (958) 813-15-60
+a.sharapova@moscowzoo.ru
+
+Актуальная информация о том, как связаться с зоопарком и добраться до нас:
 """
 
 
