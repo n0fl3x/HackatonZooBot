@@ -150,6 +150,7 @@ async def get_totem_animal(proxy_dict: dict) -> dict:
 
         else:
             rand_winner = choice(list(winner_dict.keys()))
+            print(rand_winner)
 
             return {
                 'chat_id': chat_id,

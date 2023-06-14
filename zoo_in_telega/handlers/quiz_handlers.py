@@ -321,6 +321,7 @@ async def process_question_5(callback_query: types.CallbackQuery, state: FSMCont
             data['5th_question'] = callback_query.data
             proxy_dict = data.as_dict()
             result = await get_totem_animal(proxy_dict=proxy_dict)
+        # TODO: разбить функцию записи на несколько для ускорения процесса
         await check_user_db_record(state=state)
         await bot.send_message(
             chat_id=callback_query.from_user.id,
